@@ -1,7 +1,6 @@
-package assignment2;
+//package assignment2;
 
 import java.awt.Color;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import de.rwth.hci.Graphics.GraphicsEventSystem;
