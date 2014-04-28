@@ -36,6 +36,8 @@ public class WindowSystem extends GraphicsEventSystem {
 
 	protected void handlePaint() {
 		this.setColor(Color.BLACK);
+		// Your test program should display a single line from (0.2, 0.3) to 
+		// (0.8, 0.7) on your “desktop”
 		this.drawLine(0.2f, 0.3f, 0.8f, 0.7f);
 	}
 
