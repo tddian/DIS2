@@ -36,21 +36,24 @@ public class WindowSystem extends GraphicsEventSystem {
 	protected void handlePaint() {
 	
         /* 
-         * Draw all the SimpleWindows	    
+         * Draw all the windows	    
          */
         int num_window = simpleWindows.size();
         for(int i=0; i<num_window; i++) {
             SimpleWindow sw = simpleWindows.get(i);
-            this.setColor(Color.LIGHT_GRAY);
-            fillRect(sw.getX(),sw.getY(),sw.getX()+sw.getWidth(),sw.getY()+sw.getHeight());            
-            this.setColor(Color.BLACK);
-            drawRect(sw.getX(),sw.getY(),sw.getX()+sw.getWidth(),sw.getY()+sw.getHeight());            
+            this.drawWindow(sw);
          }
 	}
 
-    /* Create a new window */
+    /* Draw a SimpleWindow as a simple rectangular */
+    protected void drawWindow(SimpleWindow sw) {
+        this.setColor(Color.LIGHT_GRAY);
+        fillRect(sw.getX(),sw.getY(),sw.getX()+sw.getWidth(),sw.getY()+sw.getHeight());
+    }
+
+    /* Create a new window at default position and size */
     public SimpleWindow createNewWindow() {
-        SimpleWindow sw = new SimpleWindow(20,20,100,200);
+        SimpleWindow sw = new SimpleWindow(0,0,200,200);
         simpleWindows.add(sw);
         return sw;
     }
@@ -62,16 +65,25 @@ public class WindowSystem extends GraphicsEventSystem {
         this.requestRepaint();
     }
 
-	/*	
-	 * Function to draw a line in the abstract coordinate system,
-	 * accepting float values ranging from 0.0 to 1.0
-	 */	
-	void drawLine(float StartX, float StartY,float EndX, float EndY) {
-		double originX = mWidth * StartX;
-		double originY = mHeight * StartY;
-		double destinationX = mWidth * EndX;
-		double destinationY = mHeight * EndY;
-		super.drawLine(originX, originY, destinationX, destinationY);
-	}
-	
+    /* Return the top SimpleWindow at given position (x,y). Return null otherwise */
+    public SimpleWindow getWindowAtPosition(int x, int y) {
+        int num_window = simpleWindows.size();
+        for(int i=num_window-1; i>=0; i--) {
+            SimpleWindow sw = simpleWindows.get(i);
+            if (isPointInside(sw,x,y)) {
+                return sw;
+            }
+         }
+         return null;
+    }
+
+    public void closeWindow(SimpleWindow sw) {
+        simpleWindows.remove(sw);
+    }
+
+    private boolean isPointInside(SimpleWindow sw, int x, int y) {
+        return (sw.getX()<x) && (sw.getX()+sw.getWidth()>x)
+            && (sw.getY()<y) && (sw.getY()+sw.getHeight()>y);
+    }       
+
 }
