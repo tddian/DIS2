@@ -17,10 +17,14 @@ manager should have are:
 
 public class WindowManager extends WindowSystem {
     
-    private WindowSystem ws;
     private final int titlebarHeight = 20;
     private final int closeButtonWidth = 16;
     private final int closeButtonPadding = 2;
+    
+    private int lastX;
+    private int lastY;
+    private SimpleWindow draggedWindow = null;
+    
 	public WindowManager(int width, int height) {
         super(width,height);
     }
@@ -47,7 +51,8 @@ public class WindowManager extends WindowSystem {
             sw.getY()+closeButtonPadding+closeButtonWidth);
 
     }
-
+    
+    @Override
     public void handleMouseClicked(int x, int y) {
         SimpleWindow sw = getWindowAtPosition(x,y);
         if (sw!=null && isPointInCloseButton(sw,x,y)) {
@@ -55,11 +60,44 @@ public class WindowManager extends WindowSystem {
             requestRepaint();
         }
     }
-    
+    @Override
     public void handleMouseDragged(int x, int y) {
-        System.out.print(String.valueOf(x)+", "+String.valueOf(y)+"\n");    
+        System.out.print("Mouse dragging.. "+String.valueOf(x)+", "+String.valueOf(y)+"\n");
+        if (draggedWindow!=null) {
+            super.moveWindow(
+                draggedWindow,
+                draggedWindow.getX()+x-lastX,
+                draggedWindow.getY()+y-lastY);
+            lastX = x;
+            lastY = y;
+        }            
+    }
+    @Override
+    public void handleMousePressed(int x, int y) {
+        System.out.print("Mouse pressed.. "+String.valueOf(x)+", "+String.valueOf(y)+"\n"); 
+        SimpleWindow sw = getWindowAtPosition(x,y);
+        if (sw!=null) {
+            // Bring the pointed window to top.
+            super.bringWindowToTop(sw);
+        }
+        if (sw!=null && isPointInTitlebar(sw,x,y) && !isPointInCloseButton(sw,x,y)) {
+            // Record the pressed point and window, for later use for dragging.
+            lastX = x;
+            lastY = y;
+            draggedWindow = sw;
+        }
+    }
+    @Override
+    public void handleMouseReleased(int x, int y) {
+        System.out.print("Mouse released.. "+String.valueOf(x)+", "+String.valueOf(y)+"\n");        
+        draggedWindow = null;
+    }
+    @Override
+    public void handleMouseMoved(int x, int y) {
+//        System.out.print("Mouse moving..");        
     }
 
+    
     private boolean isPointInCloseButton(SimpleWindow sw, int x, int y) {
         return 
             (x>sw.getX()+closeButtonPadding)

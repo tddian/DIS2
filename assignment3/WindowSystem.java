@@ -34,7 +34,6 @@ public class WindowSystem extends GraphicsEventSystem {
 	}
 
 	protected void handlePaint() {
-	
         /* 
          * Draw all the windows	    
          */
@@ -48,7 +47,17 @@ public class WindowSystem extends GraphicsEventSystem {
     /* Draw a SimpleWindow as a simple rectangular */
     protected void drawWindow(SimpleWindow sw) {
         this.setColor(Color.LIGHT_GRAY);
-        fillRect(sw.getX(),sw.getY(),sw.getX()+sw.getWidth(),sw.getY()+sw.getHeight());
+        fillRect(
+            sw.getX(),
+            sw.getY(),
+            sw.getX()+sw.getWidth(),
+            sw.getY()+sw.getHeight());
+        this.setColor(Color.GRAY);
+        drawRect(
+            sw.getX(),
+            sw.getY(),
+            sw.getX()+sw.getWidth(),
+            sw.getY()+sw.getHeight());
     }
 
     /* Create a new window at default position and size */
@@ -65,6 +74,17 @@ public class WindowSystem extends GraphicsEventSystem {
         this.requestRepaint();
     }
 
+    /* Bring a window to top */
+    public void bringWindowToTop(SimpleWindow sw) {
+        simpleWindows.remove(sw);
+        int num_window = simpleWindows.size();
+        System.out.print("After removal: "+String.valueOf(num_window)+", ");
+        simpleWindows.add(sw);
+        num_window = simpleWindows.size();
+        System.out.print("After add: "+String.valueOf(num_window)+"\n");
+        this.requestRepaint();
+    }
+    
     /* Return the top SimpleWindow at given position (x,y). Return null otherwise */
     public SimpleWindow getWindowAtPosition(int x, int y) {
         int num_window = simpleWindows.size();
