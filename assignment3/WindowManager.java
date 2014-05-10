@@ -17,10 +17,10 @@ manager should have are:
 
 public class WindowManager extends WindowSystem {
     
-    private int titlebarHeight = 20;
-    private int closeButtonWidth = 16;
-    private int closeButtonPadding = 2;
     private WindowSystem ws;
+    private final int titlebarHeight = 20;
+    private final int closeButtonWidth = 16;
+    private final int closeButtonPadding = 2;
 	public WindowManager(int width, int height) {
         super(width,height);
     }
@@ -62,18 +62,18 @@ public class WindowManager extends WindowSystem {
 
     private boolean isPointInCloseButton(SimpleWindow sw, int x, int y) {
         return 
-            x>sw.getX()+closeButtonPadding 
-            && y>sw.getY()+closeButtonPadding 
-            && x<sw.getX()+closeButtonPadding+closeButtonWidth
-            && y<sw.getY()+closeButtonPadding+closeButtonWidth ;
+            (x>sw.getX()+closeButtonPadding)
+            && (y>sw.getY()+closeButtonPadding) 
+            && (x<sw.getX()+closeButtonPadding+closeButtonWidth)
+            && (y<sw.getY()+closeButtonPadding+closeButtonWidth) ;
     }
 
     private boolean isPointInTitlebar(SimpleWindow sw, int x, int y) {
         return 
-            x>sw.getX() 
-            && y>sw.getY() 
-            && x<sw.getX()+sw.getWidth()
-            && y<sw.getY()+titlebarHeight ;
+            (x>sw.getX())
+            && (y>sw.getY())
+            && (x<sw.getX()+sw.getWidth())
+            && (y<sw.getY()+titlebarHeight) ;
     }
 
 }
