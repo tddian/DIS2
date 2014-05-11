@@ -1,15 +1,37 @@
-public class MyApp {
+// uses the swing utilites to launch asynchronously
+// this should help with some bug of the GES.jar
+import javax.swing.SwingUtilities;
 
-	public static void main(String[] args) {
-		WindowManager windowSystem = new WindowManager(1000, 700);
-		SimpleWindow sw = windowSystem.createNewWindow();
-		windowSystem.moveWindow(sw,300,100);
+public class MyApp {
+	
+	// main - just launch the GUI drawing
+    public static void main(String[] args) {
+
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                createAndShowGUI(); 
+            }
+        });
+    }
+
+    // create the desktop and do tomething inside
+	static private void createAndShowGUI() {
+
+		//Create the WM, Which in our design is a layer on TOP
+		//of WS. as such asking the windowManager is like asking
+		//the WS directly for a window. (WS will keep track of them)
+		WindowManager wm = new WindowManager(1000, 700);
+		
+		// create 3 windows and put them around the desktop
+		SimpleWindow sw = wm.createNewWindow();
+		wm.moveWindow(sw,300,100);
 		
 		sw = windowSystem.createNewWindow();
-		windowSystem.moveWindow(sw,200,400);
+		windowManager.moveWindow(sw,200,400);
 		
 		sw = windowSystem.createNewWindow();
-		windowSystem.moveWindow(sw,300,600);
+		w.moveWindow(sw,300,500);
+
 	}
 
 }

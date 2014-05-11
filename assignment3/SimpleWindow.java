@@ -1,8 +1,10 @@
-/**
-* @author dian
-* Your SimpleWindow class doesn’t need to have much functionality yet
-*/
+// 
+// @author dian
 
+
+// Our SimpleWindow
+// just keep track of it's own coordinates and dimension
+// so it contain basic stuff.. mostly getter and setter for those properties
 public class SimpleWindow {
 
 private int mX, mY, mWidth, mHeight;
@@ -13,12 +15,15 @@ private int mX, mY, mWidth, mHeight;
         mWidth = 0;
         mHeight = 0;
     }
+
     public SimpleWindow(int inX, int inY, int inWidth, int inHeight) {
         mX = inX;
         mY = inY;
         mWidth = inWidth;
         mHeight = inHeight;
     }
+
+
     public int getX() { return mX; }
     public int getY() { return mY; }
     public int getWidth() { return mWidth; }

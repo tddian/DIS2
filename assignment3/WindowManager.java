@@ -1,57 +1,137 @@
 import java.awt.Color;
 
-/**
- * @Task 2. Window Manager
- * 
-In this next part, you will implement a basic window manager that adds mouse 
-input. In particular, you should implement a WindowManager class which adds a 
-titlebar and a close button to all windows. The basic features your window 
-manager should have are:
 
-• Show a titlebar and close button for each window.
-• Allow the user to move a window by dragging it around.
-• Allow the user to close a window by clicking on the close button.
 
- */
+// WINDOW MANAGER
+// in our implementation we decide to sacrifice flexibility since the
+// project is still small and avoid overhead in communication between
+// components.
+// This means that the WM is built ON TOP of the WS, and as such it
+// hinerits from it.
 
+// then it will override the some basic methods and add the decoration's ones
+
+// it manage the decorations and the position of the windows
 
 public class WindowManager extends WindowSystem {
     
+    // various dimensions, used to calculate position of the decorations
     private final int titlebarHeight = 20;
-    private final int closeButtonWidth = 16;
-    private final int closeButtonPadding = 2;
+    private final int buttonWidth = 16;
+    private final int buttonMargin = 2;
     
+    // instance variables used to handle the mouse events
     private int lastX;
     private int lastY;
     private SimpleWindow draggedWindow = null;
-    
+
+
+    // just call the WS constructor, we will later override and extend it
 	public WindowManager(int width, int height) {
         super(width,height);
     }
+
+
     
-    /* Override the function drawWindow(), which is called by handlePaint() */
+     // draw function,take the base window and add all the decorations to it
     @Override
     protected void drawWindow(SimpleWindow sw) {
-        super.drawWindow(sw);   // Draw the basic window as WindowSystem does.
+        // Draw the basic window as WindowSystem does.
+        super.drawWindow(sw);   
         
-        // Then draw the titlebar
-        this.setColor(Color.BLACK);
+        // add the WM decoration (assuming standard colors)
+        this.drawTitlebar(sw);
+        this.drawMinimizeButton(sw);
+        this.drawCloseButton(sw);
+        this.drawBorders(sw);
+    }
+    
+
+    // "TOOLKIT" functions (we don't have one yet, so we'll group them here)
+    // These toolkit function provide some basic defaults through overloading
+
+    // draw the Titlebar, defaults are color=BLACK and title="untitled"
+    private void drawTitlebar(SimpleWindow sw){
+        drawTitlebar(sw,"Untitled",Color.BLACK);
+    }
+    private void drawTitlebar(SimpleWindow sw, String title){
+        drawTitlebar(sw,title,Color.BLACK);
+    }
+    private void drawTitlebar(SimpleWindow sw, String title, Color color){
+        this.setColor(color);
         fillRect(
             sw.getX(),
             sw.getY(),
             sw.getX()+sw.getWidth(),
             sw.getY()+titlebarHeight);
-        
-        // Next is the close button
-        this.setColor(Color.RED);
-        fillRect(
-            sw.getX()+closeButtonPadding,
-            sw.getY()+closeButtonPadding,
-            sw.getX()+closeButtonPadding+closeButtonWidth,
-            sw.getY()+closeButtonPadding+closeButtonWidth);
-
+        //draw the title, in white
+        this.setColor(Color.YELLOW);
+        drawString(
+            title,
+            sw.getX()+buttonMargin*4+buttonWidth*2,
+            sw.getY()+titlebarHeight-buttonMargin);
     }
-    
+
+    // draw the Close button, with an X in it, standard color is RED with black lines
+    private void drawCloseButton(SimpleWindow sw){
+        drawCloseButton(sw,Color.RED);
+    }
+    private void drawCloseButton(SimpleWindow sw, Color color){
+        this.setColor(color);
+        // this is the 2nd button, after minimizing. so calculate the right spacing
+        fillRect(
+            sw.getX()+2*buttonMargin+buttonWidth,
+            sw.getY()+buttonMargin,
+            sw.getX()+2*buttonMargin+2*buttonWidth,
+            sw.getY()+buttonMargin+buttonWidth);
+        // symbol just an x
+        this.setColor(Color.BLACK);
+        drawString("X",
+            sw.getX()+4*buttonMargin+buttonWidth,
+            sw.getY()+titlebarHeight-2*buttonMargin);
+    }
+
+
+    // MINIMIZE NOT FULLY IMPLEMENTED YET
+    // draw minimizeButton, standard color YELLOW
+    private void drawMinimizeButton(SimpleWindow sw){
+        drawMinimizeButton(sw, Color.YELLOW);
+    }
+    private void drawMinimizeButton(SimpleWindow sw, Color color){
+        this.setColor(color);
+        fillRect(
+            sw.getX()+buttonMargin,
+            sw.getY()+buttonMargin,
+            sw.getX()+buttonMargin+buttonWidth,
+            sw.getY()+buttonMargin+buttonWidth);
+        this.setColor(Color.BLACK);
+        drawString("_",
+            sw.getX()+3*buttonMargin,
+            sw.getY()+titlebarHeight-3*buttonMargin);
+    }
+
+
+    // add the borders to the window (standar color BLACK)
+    private void drawBorders(SimpleWindow sw){
+        drawBorders(sw,Color.BLACK);
+    }
+    private void drawBorders(SimpleWindow sw,Color color){
+        this.setColor(color);
+        drawRect(
+            sw.getX(),
+            sw.getY(),
+            sw.getX()+sw.getWidth(),
+            sw.getY()+sw.getHeight());
+    }
+
+
+
+
+
+    // Mouse handling Functions
+
+    //If we receive a click find the visible window under it (if any)
+    // then check if it is in one of the buttons and handle it 
     @Override
     public void handleMouseClicked(int x, int y) {
         SimpleWindow sw = getWindowAtPosition(x,y);
@@ -59,6 +139,11 @@ public class WindowManager extends WindowSystem {
             super.closeWindow(sw);
             requestRepaint();
         }
+        if (sw!=null && isPointInMinimizeButton(sw,x,y)) {
+            super.minimizeWindow(sw);
+            requestRepaint();
+        }
+
     }
     @Override
     public void handleMouseDragged(int x, int y) {
@@ -80,7 +165,8 @@ public class WindowManager extends WindowSystem {
             // Bring the pointed window to top.
             super.bringWindowToTop(sw);
         }
-        if (sw!=null && isPointInTitlebar(sw,x,y) && !isPointInCloseButton(sw,x,y)) {
+        // MINIMIZE NOT FULLY IMPLEMENTED YET
+        else if (sw!=null && isPointInTitlebar(sw,x,y) && !isPointInCloseButton(sw,x,y)) {
             // Record the pressed point and window, for later use for dragging.
             lastX = x;
             lastY = y;
@@ -98,20 +184,34 @@ public class WindowManager extends WindowSystem {
     }
 
     
+    
+    // functions to know if the mouse is inside the closing button of this window
     private boolean isPointInCloseButton(SimpleWindow sw, int x, int y) {
         return 
-            (x>sw.getX()+closeButtonPadding)
-            && (y>sw.getY()+closeButtonPadding) 
-            && (x<sw.getX()+closeButtonPadding+closeButtonWidth)
-            && (y<sw.getY()+closeButtonPadding+closeButtonWidth) ;
+            (x>sw.getX()+2*buttonMargin+buttonWidth)
+            && (y>sw.getY()+buttonMargin) 
+            && (x<sw.getX()+2*buttonMargin+2*buttonWidth)
+            && (y<sw.getY()+buttonMargin+buttonWidth) ;
     }
 
+    // functions to know if the mouse is inside the titlebar of this windows
     private boolean isPointInTitlebar(SimpleWindow sw, int x, int y) {
         return 
             (x>sw.getX())
             && (y>sw.getY())
             && (x<sw.getX()+sw.getWidth())
             && (y<sw.getY()+titlebarHeight) ;
+    }
+
+
+    // MINIMIZE NOT FULLY IMPLEMENTED YET
+    // functions to know if the mouse is inside the minimizing of this windows
+    private boolean isPointInMinimizeButton(SimpleWindow sw, int x, int y) {
+        return 
+            (x>sw.getX()+buttonMargin)
+            && (y>sw.getY()+buttonMargin) 
+            && (x<sw.getX()+buttonMargin+buttonWidth)
+            && (y<sw.getY()+buttonMargin+buttonWidth) ;
     }
 
 }
