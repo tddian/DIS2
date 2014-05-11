@@ -26,6 +26,7 @@ public class WindowManager extends WindowSystem {
     private int lastX;
     private int lastY;
     private SimpleWindow draggedWindow = null;
+    // private SimpleWindow resizedWindow = null;
 
 
     // just call the WS constructor, we will later override and extend it
@@ -155,6 +156,8 @@ public class WindowManager extends WindowSystem {
     @Override
     public void handleMouseDragged(int x, int y) {
         System.out.print("Mouse dragging.. "+String.valueOf(x)+", "+String.valueOf(y)+"\n");
+        
+        // DRAGGIN WINDOW
         if (draggedWindow!=null) {
             super.moveWindow(
                 draggedWindow,
@@ -162,7 +165,17 @@ public class WindowManager extends WindowSystem {
                 draggedWindow.getY()+y-lastY);
             lastX = x;
             lastY = y;
-        }            
+        } 
+        //RESIZING WINDOW
+        // else if (resizedWindow!=null) {
+        //     super.moveWindow(
+        //         draggedWindow,
+        //         draggedWindow.getX()+x-lastX,
+        //         draggedWindow.getY()+y-lastY);
+        //     lastX = x;
+        //     lastY = y;
+        // }            
+
     }
     @Override
     public void handleMousePressed(int x, int y) {
@@ -172,13 +185,18 @@ public class WindowManager extends WindowSystem {
             // Bring the pointed window to top.
             super.bringWindowToTop(sw);
         }
-        // MINIMIZE NOT FULLY IMPLEMENTED YET
-        // else if (sw!=null && isPointInTitlebar(sw,x,y) && !isPointInCloseButton(sw,x,y)) {
-        //     // Record the pressed point and window, for later use for dragging.
-        //     lastX = x;
-        //     lastY = y;
-        //     draggedWindow = sw;
-        // }
+        
+        if (sw!=null 
+            && isPointInTitlebar(sw,x,y) 
+            && !isPointInCloseButton(sw,x,y) 
+            && !isPointInMinimizeButton(sw,x,y)) {
+            // Record the pressed point and window, for later use for dragging.
+            lastX = x;
+            lastY = y;
+            draggedWindow = sw;
+        }
+    // MINIMIZE NOT FULLY IMPLEMENTED YET
+
     }
     @Override
     public void handleMouseReleased(int x, int y) {
