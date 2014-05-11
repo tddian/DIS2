@@ -19,7 +19,7 @@ public class WindowSystem extends GraphicsEventSystem {
     // array to store the windows active and miminized
 	private ArrayList<SimpleWindow> simpleWindows;
     // MINIMIZE NOT FULLY IMPLEMENTED YET
-	private ArrayList<SimpleWindow> minimizedWindows
+	private ArrayList<SimpleWindow> minimizedWindows;
 
     // constructor - just initialize our desktop
 	public WindowSystem(int width, int height) {

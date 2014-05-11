@@ -19,6 +19,8 @@ public class WindowManager extends WindowSystem {
     private final int titlebarHeight = 20;
     private final int buttonWidth = 16;
     private final int buttonMargin = 2;
+    private final int borderSize = 2;
+
     
     // instance variables used to handle the mouse events
     private int lastX;
@@ -111,17 +113,22 @@ public class WindowManager extends WindowSystem {
     }
 
 
-    // add the borders to the window (standar color BLACK)
+    // add the borders to the window (standar color BLACK standard size 4)
     private void drawBorders(SimpleWindow sw){
-        drawBorders(sw,Color.BLACK);
+        drawBorders(sw,4,Color.BLACK);
     }
-    private void drawBorders(SimpleWindow sw,Color color){
+    private void drawBorders(SimpleWindow sw, int size){
+        drawBorders(sw,size,Color.BLACK);
+    }
+    private void drawBorders(SimpleWindow sw, int size, Color color){
         this.setColor(color);
-        drawRect(
-            sw.getX(),
-            sw.getY(),
-            sw.getX()+sw.getWidth(),
-            sw.getY()+sw.getHeight());
+        for(int i=0; i<size;i++) {        // for better version
+            drawRect(
+                sw.getX()+i,
+                sw.getY()+titlebarHeight-1,     // make it overlap with titlebar
+                sw.getX()+sw.getWidth()-i-1,    // inset given by width of border 
+                sw.getY()+sw.getHeight()-i-1);  // inset given by width of border 
+        }
     }
 
 
@@ -139,10 +146,10 @@ public class WindowManager extends WindowSystem {
             super.closeWindow(sw);
             requestRepaint();
         }
-        if (sw!=null && isPointInMinimizeButton(sw,x,y)) {
-            super.minimizeWindow(sw);
-            requestRepaint();
-        }
+        // if (sw!=null && isPointInMinimizeButton(sw,x,y)) {
+        //     super.minimizeWindow(sw);
+        //     requestRepaint();
+        // }
 
     }
     @Override
@@ -166,12 +173,12 @@ public class WindowManager extends WindowSystem {
             super.bringWindowToTop(sw);
         }
         // MINIMIZE NOT FULLY IMPLEMENTED YET
-        else if (sw!=null && isPointInTitlebar(sw,x,y) && !isPointInCloseButton(sw,x,y)) {
-            // Record the pressed point and window, for later use for dragging.
-            lastX = x;
-            lastY = y;
-            draggedWindow = sw;
-        }
+        // else if (sw!=null && isPointInTitlebar(sw,x,y) && !isPointInCloseButton(sw,x,y)) {
+        //     // Record the pressed point and window, for later use for dragging.
+        //     lastX = x;
+        //     lastY = y;
+        //     draggedWindow = sw;
+        // }
     }
     @Override
     public void handleMouseReleased(int x, int y) {

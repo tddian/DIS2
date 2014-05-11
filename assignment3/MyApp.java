@@ -24,13 +24,13 @@ public class MyApp {
 		
 		// create 3 windows and put them around the desktop
 		SimpleWindow sw = wm.createNewWindow();
-		wm.moveWindow(sw,300,100);
+		wm.moveWindow(sw,200,100);
 		
-		sw = windowSystem.createNewWindow();
-		windowManager.moveWindow(sw,200,400);
+		sw = wm.createNewWindow();
+		wm.moveWindow(sw,300,250);
 		
-		sw = windowSystem.createNewWindow();
-		w.moveWindow(sw,300,500);
+		sw = wm.createNewWindow();
+		wm.moveWindow(sw,400,350);
 
 	}
 
