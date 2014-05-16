@@ -12,13 +12,10 @@ public class RATLabel extends RATWidget {
 		RATLabel(label,20,20);
 	}
 	public void RATLabel(String label, int x, int y){
-		RATLabel(label,x,y,100,20)
+		RATLabel(label,x,y,100,20);
 	}
-	public void RATLabel(String label, int x, int y, Color fgcolor){
-		RATLabel(label,x,y,100,20)
-	}
-	public void RATLabel(String label, int x, int y, Color fgcolor, Color bgcolor){
-		RATLabel(label,x,y,100,20)
+	public void RATLabel(String label, int x, int y, int width, int height, Color fgcolor){
+		RATLabel(label,x,y,100,20,Color.Black);
 	}
 	public void RATLabel(String label, int x, int y, int width, int height, Color fgcolor, Color bgcolor){
 		this.label = label;
@@ -26,7 +23,11 @@ public class RATLabel extends RATWidget {
 		this.y = y;
 		this.widht = widht;
 		this.height = height;
+		this.fgcolor = fgcolor;
+		this.bgcolor = bgcolor;
 	}
+
+	
 
 
 }

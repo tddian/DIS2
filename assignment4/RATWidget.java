@@ -6,13 +6,13 @@
 abstract class RATWidget {
 	
 	// position
-	int posX;
-	int posY;
+	public int posX;
+	public int posY;
 	// dimensions
-	int width;
-	int height;
+	public int width;
+	public int height;
 	// label
-	String label;
+	public String label;
 	
 	// Background and foreground color
 	Color bgColor;
@@ -20,12 +20,16 @@ abstract class RATWidget {
 	
 	
 	// move the window to the specified coordinate
-	moveTo(int x, int y);
+	public void moveTo(int x, int y);
 	
 	// paint itself.
-	show();
+	public void show();
 	
 	
+
+
+	// setters and getters;
+
 }
 
 
