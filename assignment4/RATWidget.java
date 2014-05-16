@@ -20,10 +20,15 @@ abstract class RATWidget {
 	
 	
 	// move the window to the specified coordinate
-	public void moveTo(int x, int y);
+	public void moveTo(int x, int y) {
+		this.x = x;
+		this.y = y;
+		this.paint();
+	}
+
 	
-	// paint itself.
-	public void show();
+	// paint itself. // I don't know how to call this method.
+	public void paint();
 	
 	
 
