@@ -1,13 +1,14 @@
+import java.awt.Color;
 
 // BASE ABSTRACT CLASS
 // This class define the basic attribute and function for the basic widget
 
 
-abstract class RATWidget {
+abstract class RATwidget {
 	
 	// position
-	public int posX;
-	public int posY;
+	public int x;
+	public int y;
 	// dimensions
 	public int width;
 	public int height;
@@ -15,8 +16,8 @@ abstract class RATWidget {
 	public String label;
 	
 	// Background and foreground color
-	Color bgColor;
-	Color fgColor;
+	public Color bgColor;
+	public Color fgColor;
 	
 	
 	// move the window to the specified coordinate
@@ -28,7 +29,7 @@ abstract class RATWidget {
 
 	
 	// paint itself. // I don't know how to call this method.
-	public void paint();
+	public void paint() { }
 	
 	
 
