@@ -2,20 +2,22 @@
 // this should help with some bug of the GES.jar
 import javax.swing.SwingUtilities;
 
-public class MyApp {
+public class MyApp implements RATmouseListener {
 	
 	// main - just launch the GUI drawing
     public static void main(String[] args) {
 
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                createAndShowGUI(); 
+                MyApp myApp = new MyApp();
+//                createAndShowGUI(); 
             }
         });
     }
 
     // Create the user interface
-	static private void createAndShowGUI() {
+//	static private void createAndShowGUI() {
+    public MyApp() {
 
 		
 		// THIS IS HOW I WOULD IMAGINE THE WORKFLOW
@@ -53,4 +55,6 @@ public class MyApp {
 
 	}
 
+    @Override
+    public void mouseClicked() {}
 }
