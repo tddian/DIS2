@@ -27,6 +27,9 @@ public class RATLabel extends RATWidget {
 		this.bgcolor = bgcolor;
 	}
 
+
+	
+
 	
 
 

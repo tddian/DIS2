@@ -5,6 +5,15 @@
 
 abstract class RATWidget {
 	
+	// bound of the window.
+	// in case this is a subview (es handle of slider) it must know where to stop
+	// a child should not get off the parent window (set on addSubWindow)
+	public buoundTopLeftX;
+	public buoundTopLeftY;
+	public buoundBottomRightX;
+	public buoundBottomRightY;
+
+
 	// position
 	public int posX;
 	public int posY;
@@ -27,8 +36,13 @@ abstract class RATWidget {
 	}
 
 	
-	// paint itself. // I don't know how to call this method.
-	public void paint();
+
+
+
+	// paint itself. 
+	public void paint(){
+		ws.handlePaint(this);
+	};
 	
 	
 
