@@ -11,11 +11,11 @@ import java.awt.Color;
 public class RATButton extends RATLabel {
     
     // DEFAULTS
-    private static final String defaultLabel = "EmptyButton";
-    private static final int defaultPadding = 4;
-    private static final int defaultBorderSize = 2;
-    private static final Color defaultBgColor = Color.DARK_GRAY;
-    private static final Color defaultFgColor = Color.CYAN;
+    private static String defaultButtonText = "EmptyButton";
+    private static int defaultButtonPadding = 4;
+    private static int defaultButtonBorderSize = 2;
+    private static Color defaultButtonBgColor = Color.DARK_GRAY;
+    private static Color defaultButtonFgColor = Color.CYAN;
 
     // additional parameters
     public int borderSize;
@@ -31,49 +31,32 @@ public class RATButton extends RATLabel {
     // constructors (overloading)
     public RATButton(){
         super();
-        this.label = defaultLabel;
-        this.padding = defaultPadding;
-        this.borderSize = defaultBorderSize;
+        // override default
+        this.label = defaultButtonText;
+        this.padding = defaultButtonPadding;
+        this.borderSize = defaultButtonBorderSize;
+        this.fgColor = defaultButtonFgColor;
+        this.bgColor = defaultButtonBgColor;
+        this.height = 10 + 2*this.defaultButtonPadding; // 10 is the standard height for a drawString
+        this.width = 7 * label.length() + 2*this.padding;   // 7 as standard characther width
     }
     public RATButton(String label){
-        super(label);
-        this.padding = defaultPadding;
-        this.borderSize = defaultBorderSize;
+        this();
         this.label = label;
-        this.height = 10 + 2*this.defaultPadding; // 10 is the standard height for a drawString
+        this.height = 10 + 2*this.defaultButtonPadding; // 10 is the standard height for a drawString
         this.width = 7 * label.length() + 2*this.padding;   // 7 as standard characther width
     }
     public RATButton(String label, int x, int y){
-        super();
-        this.padding = defaultPadding;
-        this.borderSize = defaultBorderSize;
-        this.label = label;
-        this.height = 10 + 2*this.defaultPadding; // 10 is the standard height for a drawString
-        this.width = 7 * label.length() + 2*this.padding;   // 7 as standard characther width
+        this(label);
         this.x = x;
         this.y = y;
     }
     public RATButton(String label, int x, int y, Color fg){
-        super();
-        this.padding = defaultPadding;
-        this.borderSize = defaultBorderSize;
-        this.height = 10 + 2*this.defaultPadding; // 10 is the standard height for a drawString
-        this.width = 7 * label.length() + 2*this.padding;   // 7 as standard characther width
-        this.label = label;
-        this.x = x;
-        this.y = y;
+        this(label, x, y);
         this.fgColor = fg;
     }
     public RATButton(String label, int x, int y, Color fg, Color bg){
-        super();
-        this.padding = defaultPadding;
-        this.borderSize = defaultBorderSize;
-        this.height = 10 + 2*this.defaultPadding; // 10 is the standard height for a drawString
-        this.width = 7 * label.length() + 2*this.padding;   // 7 as standard characther width
-        this.label = label;
-        this.x = x;
-        this.y = y;
-        this.fgColor = fg;
+        this(label, x, y, fg);
         this.bgColor = bg;
     }
     

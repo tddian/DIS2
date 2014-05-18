@@ -7,12 +7,12 @@ import java.awt.Color;
 abstract class RATWidget {
 
 	// Definitions of some default values
-	private static final int defaultX = 50;
-	private static final int defaultY = 50;
-	private static final int defaultWidth = 100;
-	private static final int defaultHeight = 10;
-	private static final Color defaultBgColor = new Color(0,0,0,0);
-	private static final Color defaultFgColor = Color.BLACK;
+	private static int defaultX = 50;
+	private static int defaultY = 50;
+	private static int defaultWidth = 100;
+	private static int defaultHeight = 10;
+	private static Color defaultBgColor = new Color(0,0,0,0);
+	private static Color defaultFgColor = Color.BLACK;
 	
 	// COMMON ATTRIBUTES TO ALL WIDGETS (made public for easy access, instead of getter and setter //not safe)
 

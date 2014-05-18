@@ -45,7 +45,8 @@ public class MyApp {
 
 
 		// tell the window system to use the windowManager for decoration
-		 ws.setWindowManager(wm);
+		// TRY ME , IT'S FUN. COMMENT THIS LINE TO SEE THE APPLICATION STILL RUNNING, BUT WITHOUT WM
+		ws.setWindowManager(wm);
 
         // Create my app's window
 		SimpleWindow myAppWindow = ws.createNewWindow();
@@ -60,7 +61,7 @@ public class MyApp {
 		RATButton b2 = new RATButton("English",200,200);
 		RATButton b3 = new RATButton("Francais",300,200);
 
-
+		
 		// RATButton button = new RATButton("Button Text",100,100);
 
 

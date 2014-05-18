@@ -46,8 +46,9 @@ public class WindowManager {
     }
 
     // draw the decoration for a widget. for now only the border of the buttons
-    public void drawWidgetDecoration(RATWidget w) {
-        // this.drawWidgetBorders(w);
+    public void drawWidgetDecorationInWindow(RATWidget w, SimpleWindow ws) {
+
+        this.drawWidgetBordersInWindow(w,ws);
     }
 
     // draw the Titlebar, defaults are color=BLACK and title="untitled"
@@ -112,18 +113,21 @@ public class WindowManager {
 
     // draw the widget borders - used in buttons
     // use the standard colors and parameters included in the widget
-    // public void drawWidgetBorders(RATWidget w){
-    //     ws.setColor(w.fgColor);
-    //     for(int i=0; i<w.borderSize;i++) {        // for better version
-    //         ws.drawRect(
-    //             sw.getX()+i,
-    //             sw.getY()-1,     // make it overlap with titlebar
-    //             sw.getX()+s.getWidth()-i-1,    // inset given by width of border 
-    //             sw.getY()+s.getHeight()-i-1);  // inset given by width of border 
-    //     }
+    public void drawWidgetBordersInWindow(RATWidget w, SimpleWindow sw){
+        // check if button
+        if (w instanceof RATButton) {
+            RATButton b = (RATButton)w;
+            ws.setColor(b.fgColor);
+            for(int i=0; i<b.borderSize;i++) {        // for better version
+                ws.drawRect(
+                    sw.getX()+b.x-i,    // the border is outset
+                    sw.getY()+b.y-i,    
+                    sw.getX()+b.x+b.width+i,
+                    sw.getY()+b.y+b.height+i);
+            }
+        }
+    }
 
-
-  // }
 
 
     // Mouse handling Functions
@@ -132,7 +136,6 @@ public class WindowManager {
     // If we receive a click find the visible window under it (if any)
     // then check if it is in one of the buttons and handle it 
     public void handleMouseClicked(int x, int y) {
-        System.out.print("Mouse click.. "+String.valueOf(x)+", "+String.valueOf(y)+"\n");
         SimpleWindow sw = ws.getWindowAtPosition(x,y);
         if (sw!=null && isPointInCloseButton(sw,x,y)) {
             ws.closeWindow(sw);

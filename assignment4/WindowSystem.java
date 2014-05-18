@@ -53,8 +53,6 @@ public class WindowSystem extends GraphicsEventSystem {
             // need to check if the window has children/widgets and paint them
             if (sw.hasWidgets()) {
                 for (RATWidget child: sw.getWidgets()) {
-                                System.out.println("printing widget");
-
                     this.drawWidgetInWindow(child,sw);
                 }
             }
@@ -101,7 +99,7 @@ public class WindowSystem extends GraphicsEventSystem {
                         sw.getX()+b.x+b.padding,
                         sw.getY()+b.y+b.height-b.padding);
             // decorate it
-            // if (wm!=null) wm.decorateWidget(w);
+            if (wm!=null) wm.drawWidgetDecorationInWindow(w,sw);
 
         }
         // case of RATLabel 

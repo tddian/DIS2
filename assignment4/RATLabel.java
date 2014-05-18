@@ -5,8 +5,8 @@ import java.awt.Color;
 public class RATLabel extends RATWidget {
 
 	// DEFAULTS
-	private static final String defaultLabel = "EmptyLabel";
-	private static final int defaultPadding = 2;
+	private static  String defaultLabelText = "EmptyLabel";
+	private static  int defaultLabelPadding = 2;
 	
 	// addition to the standard widget attributes
 	public String label;
@@ -16,46 +16,28 @@ public class RATLabel extends RATWidget {
 	// constructors (overloading)
 	public RATLabel(){
 		super();
-		this.label = defaultLabel;
-		this.padding = defaultPadding;
-		this.height = 10 + 2*this.defaultPadding; // 10 is the standard height for a drawString
-		this.width = 7 * label.length() + 2*this.padding;	// 7 as standard characther width
+		this.label = defaultLabelText;
+		this.padding = defaultLabelPadding;
+		this.height = 10 + 2*this.defaultLabelPadding; // 10 is the standard height for a drawString
+		this.width = 8 * label.length() + 2*this.padding;	// 8 as standard characther width
 	}
 	public RATLabel(String label){
-		super();
-		this.padding = defaultPadding;
+		this();
 		this.label = label;
-		this.height = 10 + 2*this.defaultPadding; // 10 is the standard height for a drawString
-		this.width = 7 * label.length() + 2*this.padding;	// 7 as standard characther width
+		this.height = 10 + 2*this.defaultLabelPadding; // 10 is the standard height for a drawString
+		this.width = 8 * label.length() + 2*this.padding;	// 8 as standard characther width
 	}
 	public RATLabel(String label, int x, int y){
-		super();
-		this.padding = defaultPadding;
-		this.label = label;
-		this.height = 10 + 2*this.defaultPadding; // 10 is the standard height for a drawString
-		this.width = 7 * label.length() + 2*this.padding;	// 7 as standard characther width
+		this(label);
 		this.x = x;
 		this.y = y;
 	}
 	public RATLabel(String label, int x, int y, Color fg){
-		super();
-		this.padding = defaultPadding;
-		this.height = 10 + 2*this.defaultPadding; // 10 is the standard height for a drawString
-		this.width = 7 * label.length() + 2*this.padding;	// 7 as standard characther width
-		this.label = label;
-		this.x = x;
-		this.y = y;
+		this(label,x,y);
 		this.fgColor = fg;
 	}
 	public RATLabel(String label, int x, int y, Color fg, Color bg){
-		super();
-		this.padding = defaultPadding;
-		this.height = 10 + 2*this.defaultPadding; // 10 is the standard height for a drawString
-		this.width = 7 * label.length() + 2*this.padding;	// 7 as standard characther width
-		this.label = label;
-		this.x = x;
-		this.y = y;
-		this.fgColor = fg;
+		this(label,x,y,fg);
 		this.bgColor = bg;
 	}
 
