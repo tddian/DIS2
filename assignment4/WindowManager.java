@@ -63,7 +63,7 @@ public class WindowManager {
         ws.setColor(Color.YELLOW);
         ws.drawString(
             title,
-            sw.getX()+buttonMargin*4+buttonWidth*2,
+            sw.getX()+buttonMargin*3+buttonWidth,
             sw.getY()+titlebarHeight-buttonMargin);
     }
 
@@ -73,42 +73,21 @@ public class WindowManager {
     }
     private void drawCloseButton(SimpleWindow sw, Color color){
         ws.setColor(color);
-        // this is the 2nd button, after minimizing. so calculate the right spacing
         ws.fillRect(
-            sw.getX()+2*buttonMargin+buttonWidth,
+            sw.getX()+buttonMargin,
             sw.getY()+buttonMargin,
-            sw.getX()+2*buttonMargin+2*buttonWidth,
+            sw.getX()+buttonMargin+buttonWidth,
             sw.getY()+buttonMargin+buttonWidth);
         // symbol just an x
         ws.setColor(Color.BLACK);
         ws.drawString("X",
-            sw.getX()+4*buttonMargin+buttonWidth,
+            sw.getX()+3*buttonMargin,
             sw.getY()+titlebarHeight-2*buttonMargin);
     }
 
-
-//    // MINIMIZE NOT FULLY IMPLEMENTED YET
-//    // draw minimizeButton, standard color YELLOW
-//    private void drawMinimizeButton(SimpleWindow sw){
-//        drawMinimizeButton(sw, Color.YELLOW);
-//    }
-//    private void drawMinimizeButton(SimpleWindow sw, Color color){
-//        this.setColor(color);
-//        fillRect(
-//            sw.getX()+buttonMargin,
-//            sw.getY()+buttonMargin,
-//            sw.getX()+buttonMargin+buttonWidth,
-//            sw.getY()+buttonMargin+buttonWidth);
-//        this.setColor(Color.BLACK);
-//        drawString("_",
-//            sw.getX()+3*buttonMargin,
-//            sw.getY()+titlebarHeight-3*buttonMargin);
-//    }
-
-
     // add the borders to the window (standar color BLACK standard size 4)
     private void drawBorders(SimpleWindow sw){
-        drawBorders(sw,4,Color.BLACK);
+        drawBorders(sw,3,Color.BLACK);
     }
     private void drawBorders(SimpleWindow sw, int size){
         drawBorders(sw,size,Color.BLACK);
@@ -125,110 +104,71 @@ public class WindowManager {
     }
 
 
+    // Mouse handling Functions
 
+    // If we receive a click find the visible window under it (if any)
+    // then check if it is in one of the buttons and handle it 
+    public void handleMouseClicked(int x, int y) {
+        System.out.print("Mouse click.. "+String.valueOf(x)+", "+String.valueOf(y)+"\n");
+        SimpleWindow sw = ws.getWindowAtPosition(x,y);
+        if (sw!=null && isPointInCloseButton(sw,x,y)) {
+            ws.closeWindow(sw);
+            ws.requestRepaint();
+        }
+    }
+    public void handleMouseDragged(int x, int y) {
+        System.out.print("Mouse dragging.. "+String.valueOf(x)+", "+String.valueOf(y)+"\n");
+        
+        // DRAGGIN WINDOW
+        if (draggedWindow!=null) {
+            ws.moveWindow(
+                draggedWindow,
+                draggedWindow.getX()+x-lastX,
+                draggedWindow.getY()+y-lastY);
+            lastX = x;
+            lastY = y;
+        } 
+    }
+    public void handleMousePressed(int x, int y) {
+        System.out.print("Mouse pressed.. "+String.valueOf(x)+", "+String.valueOf(y)+"\n"); 
+        SimpleWindow sw = ws.getWindowAtPosition(x,y);
+        if (sw!=null) {
+            // Bring the pointed window to top.
+            ws.bringWindowToTop(sw);
+        }
+        
+        if (sw!=null 
+            && isPointInTitlebar(sw,x,y) 
+            && !isPointInCloseButton(sw,x,y)) {
+            // Record the pressed point and window, for later use for dragging.
+            lastX = x;
+            lastY = y;
+            draggedWindow = sw;
+        }
+    }
+    public void handleMouseReleased(int x, int y) {
+        System.out.print("Mouse released.. "+String.valueOf(x)+", "+String.valueOf(y)+"\n");        
+        draggedWindow = null;
+    }
+    public void handleMouseMoved(int x, int y) {
+//        System.out.print("Mouse moving..");        
+    }
+        
+    // functions to know if the mouse is inside the closing button of this window
+    private boolean isPointInCloseButton(SimpleWindow sw, int x, int y) {
+        return 
+            (x>sw.getX()+buttonMargin)
+            && (y>sw.getY()+buttonMargin) 
+            && (x<sw.getX()+buttonMargin+buttonWidth)
+            && (y<sw.getY()+buttonMargin+buttonWidth) ;
+    }
 
-
-//    // Mouse handling Functions
-
-//    //If we receive a click find the visible window under it (if any)
-//    // then check if it is in one of the buttons and handle it 
-//    @Override
-//    public void handleMouseClicked(int x, int y) {
-//        SimpleWindow sw = getWindowAtPosition(x,y);
-//        if (sw!=null && isPointInCloseButton(sw,x,y)) {
-//            super.closeWindow(sw);
-//            requestRepaint();
-//        }
-//        // if (sw!=null && isPointInMinimizeButton(sw,x,y)) {
-//        //     super.minimizeWindow(sw);
-//        //     requestRepaint();
-//        // }
-
-//    }
-//    @Override
-//    public void handleMouseDragged(int x, int y) {
-//        System.out.print("Mouse dragging.. "+String.valueOf(x)+", "+String.valueOf(y)+"\n");
-//        
-//        // DRAGGIN WINDOW
-//        if (draggedWindow!=null) {
-//            super.moveWindow(
-//                draggedWindow,
-//                draggedWindow.getX()+x-lastX,
-//                draggedWindow.getY()+y-lastY);
-//            lastX = x;
-//            lastY = y;
-//        } 
-//        //RESIZING WINDOW
-//        // else if (resizedWindow!=null) {
-//        //     super.moveWindow(
-//        //         draggedWindow,
-//        //         draggedWindow.getX()+x-lastX,
-//        //         draggedWindow.getY()+y-lastY);
-//        //     lastX = x;
-//        //     lastY = y;
-//        // }            
-
-//    }
-//    @Override
-//    public void handleMousePressed(int x, int y) {
-//        System.out.print("Mouse pressed.. "+String.valueOf(x)+", "+String.valueOf(y)+"\n"); 
-//        SimpleWindow sw = getWindowAtPosition(x,y);
-//        if (sw!=null) {
-//            // Bring the pointed window to top.
-//            super.bringWindowToTop(sw);
-//        }
-//        
-//        if (sw!=null 
-//            && isPointInTitlebar(sw,x,y) 
-//            && !isPointInCloseButton(sw,x,y) 
-//            && !isPointInMinimizeButton(sw,x,y)) {
-//            // Record the pressed point and window, for later use for dragging.
-//            lastX = x;
-//            lastY = y;
-//            draggedWindow = sw;
-//        }
-//    // MINIMIZE NOT FULLY IMPLEMENTED YET
-
-//    }
-//    @Override
-//    public void handleMouseReleased(int x, int y) {
-//        System.out.print("Mouse released.. "+String.valueOf(x)+", "+String.valueOf(y)+"\n");        
-//        draggedWindow = null;
-//    }
-//    @Override
-//    public void handleMouseMoved(int x, int y) {
-////        System.out.print("Mouse moving..");        
-//    }
-
-//    
-//    
-//    // functions to know if the mouse is inside the closing button of this window
-//    private boolean isPointInCloseButton(SimpleWindow sw, int x, int y) {
-//        return 
-//            (x>sw.getX()+2*buttonMargin+buttonWidth)
-//            && (y>sw.getY()+buttonMargin) 
-//            && (x<sw.getX()+2*buttonMargin+2*buttonWidth)
-//            && (y<sw.getY()+buttonMargin+buttonWidth) ;
-//    }
-
-//    // functions to know if the mouse is inside the titlebar of this windows
-//    private boolean isPointInTitlebar(SimpleWindow sw, int x, int y) {
-//        return 
-//            (x>sw.getX())
-//            && (y>sw.getY())
-//            && (x<sw.getX()+sw.getWidth())
-//            && (y<sw.getY()+titlebarHeight) ;
-//    }
-
-
-//    // MINIMIZE NOT FULLY IMPLEMENTED YET
-//    // functions to know if the mouse is inside the minimizing of this windows
-//    private boolean isPointInMinimizeButton(SimpleWindow sw, int x, int y) {
-//        return 
-//            (x>sw.getX()+buttonMargin)
-//            && (y>sw.getY()+buttonMargin) 
-//            && (x<sw.getX()+buttonMargin+buttonWidth)
-//            && (y<sw.getY()+buttonMargin+buttonWidth) ;
-//    }
-
+    // functions to know if the mouse is inside the titlebar of this windows
+    private boolean isPointInTitlebar(SimpleWindow sw, int x, int y) {
+        return 
+            (x>sw.getX())
+            && (y>sw.getY())
+            && (x<sw.getX()+sw.getWidth())
+            && (y<sw.getY()+titlebarHeight) ;
+    }
 }
