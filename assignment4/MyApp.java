@@ -58,6 +58,13 @@ public class MyApp {
 		RATLabel l3 = new RATLabel("Hallo",120,110,Color.YELLOW);
 		RATLabel l4 = new RATLabel("Hallo",130,120,Color.WHITE,Color.GREEN);
 
+		
+		RATButton b1 = new RATButton("HalloButton");
+		RATButton b2 = new RATButton("HalloButton",230,220);
+		RATButton b3 = new RATButton("HalloButton",230,220,Color.WHITE);
+		RATButton b4 = new RATButton("HalloButton",230,220,Color.WHITE,Color.GREEN);
+
+
 		// RATButton button = new RATButton("Button Text",100,100);
 
 
@@ -68,6 +75,11 @@ public class MyApp {
 		myAppWindow.add(l2);
 		myAppWindow.add(l3);
 		myAppWindow.add(l4);
+
+		myAppWindow.add(b1);
+		myAppWindow.add(b2);
+		myAppWindow.add(b3);
+		myAppWindow.add(b4);
 		// myAppWindow.add(button);
         
 

@@ -36,13 +36,18 @@ public class WindowManager {
         ws = windowSystem;
     }
 
-    // drawDecoration should be called externally only by handlePaint() from the associated WindowSystem
-    public void drawDecoration(SimpleWindow sw) {
+    // drawWindowDecoration should be called externally only by handlePaint() from the associated WindowSystem
+    public void drawWindowDecoration(SimpleWindow sw) {
         // add the WM decoration (assuming standard colors)
         this.drawTitlebar(sw);
 //        this.drawMinimizeButton(sw);
         this.drawCloseButton(sw);
-        this.drawBorders(sw);
+        this.drawWindowBorders(sw);
+    }
+
+    // draw the decoration for a widget. for now only the border of the buttons
+    public void drawWidgetDecoration(RATWidget w) {
+        this.drawWidgetBorders(sw);
     }
 
     // draw the Titlebar, defaults are color=BLACK and title="untitled"
@@ -107,13 +112,13 @@ public class WindowManager {
 
 
     // add the borders to the window (standar color BLACK standard size 4)
-    private void drawBorders(SimpleWindow sw){
-        drawBorders(sw,4,Color.BLACK);
+    private void drawWindowBorders(SimpleWindow sw){
+        drawWindowBorders(sw,4,Color.BLACK);
     }
-    private void drawBorders(SimpleWindow sw, int size){
-        drawBorders(sw,size,Color.BLACK);
+    private void drawWindowBorders(SimpleWindow sw, int size){
+        drawWindowBorders(sw,size,Color.BLACK);
     }
-    private void drawBorders(SimpleWindow sw, int size, Color color){
+    private void drawWindowBorders(SimpleWindow sw, int size, Color color){
         ws.setColor(color);
         for(int i=0; i<size;i++) {        // for better version
             ws.drawRect(
@@ -124,6 +129,21 @@ public class WindowManager {
         }
     }
 
+
+    // draw the widget borders - used in buttons
+    // use the standard colors and parameters included in the widget
+    public void drawWidgetBorders(RATWidget w){
+        ws.setColor(w.fgColor);
+        for(int i=0; i<w.borderWidth;i++) {        // for better version
+            ws.drawRect(
+                sw.getX()+i,
+                sw.getY()+titlebarHeight-1,     // make it overlap with titlebar
+                sw.getX()+sw.getWidth()-i-1,    // inset given by width of border 
+                sw.getY()+sw.getHeight()-i-1);  // inset given by width of border 
+        }
+
+
+    }
 
 
 

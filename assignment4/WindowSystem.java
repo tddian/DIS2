@@ -46,7 +46,7 @@ public class WindowSystem extends GraphicsEventSystem {
             System.out.println("printing windows");
             // draw the window
             this.drawWindow(sw);
-            // wm.drawDecoration(sw);
+            wm.drawWindowDecoration(sw);
             
             // need to check if the window has children/widgets and paint them
             if (sw.hasWidgets()) {
@@ -64,7 +64,7 @@ public class WindowSystem extends GraphicsEventSystem {
 
     /* Draw a SimpleWindow as a simple rectangular */
     protected void drawWindow(SimpleWindow sw) {
-        this.setColor(Color.DARK_GRAY);
+        this.setColor(Color.LIGHT_GRAY);
         fillRect(
             sw.getX(),
             sw.getY(),
@@ -73,16 +73,41 @@ public class WindowSystem extends GraphicsEventSystem {
         // System.out.println("done printing window");
     }
     
+
     // draw a widget in a window
     // should be careful about the relative positioning
     protected void drawWidgetInWindow(RATWidget w, SimpleWindow sw) {
         
         // need to check what widget it is
+        // case of RATButton
+        if (w instanceof RATButton) {
+            // cast to access all his methods
+            RATButton b = (RATButton)w;
+            
+            // shall this go into the WM ?
+            // print the background honoring the colors ()
+            this.setColor(b.bgColor);
+            fillRect(
+                sw.getX()+b.x,
+                sw.getY()+b.y,
+                sw.getX()+b.x+b.width,
+                sw.getY()+b.y+b.height);    
+
+            // draw the label
+            this.setColor(l.fgColor);
+            this.drawString(l.label,
+                        sw.getX()+b.x+b.padding,
+                        sw.getY()+b.y+b.height-b.padding);
+            // decorate it
+            if (wm!=null) wm.decorateWidget(w);
+
+        }
         // case of RATLabel 
-        if (w instanceof RATLabel) {
+        else if (w instanceof RATLabel) {
             // cast to access all his methods
             RATLabel l = (RATLabel)w;
             
+            // shall this go into the WM ?
             // print the background honoring the colors ()
             this.setColor(l.bgColor);
             fillRect(
@@ -99,14 +124,7 @@ public class WindowSystem extends GraphicsEventSystem {
 
 
         }
-        // if (w instanceof RATButton) {
-        //     this.setColor(w.bgcolor);
-        //     fillRect(
-        //         sw.getX()+w.x,
-        //         sw.getY()+w.y,
-        //         sw.getX()+w.x+w.width,
-        //         sw.getY()+w.y+w.height);    
-        // }
+        
         
 
 
