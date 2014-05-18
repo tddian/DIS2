@@ -45,7 +45,7 @@ public class MyApp {
 
 
 		// tell the window system to use the windowManager for decoration
-		// ws.setWindowManager(wm);
+		 ws.setWindowManager(wm);
 
         // Create my app's window
 		SimpleWindow myAppWindow = ws.createNewWindow();
