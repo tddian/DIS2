@@ -45,7 +45,7 @@ public class MyApp {
 
 
 		// tell the window system to use the windowManager for decoration
-		// ws.setWindowManager(wm);
+		 ws.setWindowManager(wm);
 
         // Create my app's window
 		SimpleWindow myAppWindow = ws.createNewWindow();
@@ -53,16 +53,12 @@ public class MyApp {
 
 		// System.out.println(" s "+myAppWindow.getX()+myAppWindow.getY()+myAppWindow.getWidth()+myAppWindow.getHeight() );
 		// Create widgets
-		RATLabel l1 = new RATLabel("Hallo");
-		RATLabel l2 = new RATLabel("Hallo",100,100);
-		RATLabel l3 = new RATLabel("Hallo",120,110,Color.YELLOW);
-		RATLabel l4 = new RATLabel("Hallo",130,120,Color.WHITE,Color.GREEN);
+		RATLabel label = new RATLabel("Hallo",130,120,Color.WHITE,Color.GREEN);
 
 		
-		RATButton b1 = new RATButton("HalloButton");
-		RATButton b2 = new RATButton("HalloButton",230,220);
-		RATButton b3 = new RATButton("HalloButton",230,220,Color.WHITE);
-		RATButton b4 = new RATButton("HalloButton",230,220,Color.WHITE,Color.GREEN);
+		RATButton b1 = new RATButton("German",100,200);
+		RATButton b2 = new RATButton("English",200,200);
+		RATButton b3 = new RATButton("Francais",300,200);
 
 
 		// RATButton button = new RATButton("Button Text",100,100);
@@ -71,15 +67,12 @@ public class MyApp {
 
         // add them to the app
         // System.out.println(" s "+label.x+" s "+label.y+" s "+label.width+" s "+label.height );
-		myAppWindow.add(l1);
-		myAppWindow.add(l2);
-		myAppWindow.add(l3);
-		myAppWindow.add(l4);
-
+		myAppWindow.add(label);
+		
 		myAppWindow.add(b1);
 		myAppWindow.add(b2);
 		myAppWindow.add(b3);
-		myAppWindow.add(b4);
+		
 		// myAppWindow.add(button);
         
 

@@ -11,6 +11,8 @@ abstract class RATWidget {
 	private static final int defaultY = 50;
 	private static final int defaultWidth = 100;
 	private static final int defaultHeight = 10;
+	private static final Color defaultBgColor = new Color(0,0,0,0);
+	private static final Color defaultFgColor = Color.BLACK;
 	
 	// COMMON ATTRIBUTES TO ALL WIDGETS (made public for easy access, instead of getter and setter //not safe)
 
@@ -33,8 +35,8 @@ abstract class RATWidget {
 		this.width = defaultWidth;
 		this.height = defaultHeight;
 		this.delegate = null;
-		this.fgColor = Color.BLACK;
-		this.bgColor = new Color(0,0,0,0);
+		this.fgColor = defaultFgColor;
+		this.bgColor = defaultBgColor;
 	}
 	
 

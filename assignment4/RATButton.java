@@ -9,32 +9,73 @@ import java.awt.Color;
  */
  
 public class RATButton extends RATLabel {
+    
+    // DEFAULTS
+    private static final String defaultLabel = "EmptyButton";
+    private static final int defaultPadding = 4;
+    private static final int defaultBorderSize = 2;
+    private static final Color defaultBgColor = Color.DARK_GRAY;
+    private static final Color defaultFgColor = Color.CYAN;
 
-    // // list of mouse listener to respond to
+    // additional parameters
+    public int borderSize;
+
+
+    
+    // list of mouse listener to respond to
     private ArrayList<RATMouseListener> listeners;
 
-    // // delegate application of which call the callbacks
-    // private Object delegate = null;
-    
-    
-    // // Empty Constructor for RATButton
-    // public void RATButton() {
-    //     this("Button", 50, 50, 100, 30, Color.BLACK, Color.BLUE);
-    // }
-    // public void RATButton(String label) {
-    //     this(label, 50, 50, 100, 30, Color.BLACK, Color.BLUE);
-    // }
-    // public void RATButton(String label,int x, int y) {
-    //     this(label, x, y, 100, 30, Color.BLACK, Color.BLUE);
-    // }
-    // public void RATButton(String label,int x, int y,int width, int height) {
-    //     this(label, x, y, width, height, Color.BLACK, Color.CYAN);
-    // }
-    // // Constructor for RATButton
-    // public void RATButton(String label, int x, int y, int width, int height, Color fgcolor, Color bgcolor) {
-    //     super(label,x,y,width,height,fgcolor,bgcolor);
-    //     listeners = new ArrayList<RATMouseListener>();
-    // }
+
+
+
+    // constructors (overloading)
+    public RATButton(){
+        super();
+        this.label = defaultLabel;
+        this.padding = defaultPadding;
+        this.borderSize = defaultBorderSize;
+    }
+    public RATButton(String label){
+        super(label);
+        this.padding = defaultPadding;
+        this.borderSize = defaultBorderSize;
+        this.label = label;
+        this.height = 10 + 2*this.defaultPadding; // 10 is the standard height for a drawString
+        this.width = 7 * label.length() + 2*this.padding;   // 7 as standard characther width
+    }
+    public RATButton(String label, int x, int y){
+        super();
+        this.padding = defaultPadding;
+        this.borderSize = defaultBorderSize;
+        this.label = label;
+        this.height = 10 + 2*this.defaultPadding; // 10 is the standard height for a drawString
+        this.width = 7 * label.length() + 2*this.padding;   // 7 as standard characther width
+        this.x = x;
+        this.y = y;
+    }
+    public RATButton(String label, int x, int y, Color fg){
+        super();
+        this.padding = defaultPadding;
+        this.borderSize = defaultBorderSize;
+        this.height = 10 + 2*this.defaultPadding; // 10 is the standard height for a drawString
+        this.width = 7 * label.length() + 2*this.padding;   // 7 as standard characther width
+        this.label = label;
+        this.x = x;
+        this.y = y;
+        this.fgColor = fg;
+    }
+    public RATButton(String label, int x, int y, Color fg, Color bg){
+        super();
+        this.padding = defaultPadding;
+        this.borderSize = defaultBorderSize;
+        this.height = 10 + 2*this.defaultPadding; // 10 is the standard height for a drawString
+        this.width = 7 * label.length() + 2*this.padding;   // 7 as standard characther width
+        this.label = label;
+        this.x = x;
+        this.y = y;
+        this.fgColor = fg;
+        this.bgColor = bg;
+    }
     
     public void addListener(RATMouseListener l) { listeners.add(l); }
 }

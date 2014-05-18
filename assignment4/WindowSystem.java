@@ -46,7 +46,9 @@ public class WindowSystem extends GraphicsEventSystem {
             System.out.println("printing windows");
             // draw the window
             this.drawWindow(sw);
-            wm.drawWindowDecoration(sw);
+            if (wm!=null) {
+                wm.drawWindowDecoration(sw); 
+            }
             
             // need to check if the window has children/widgets and paint them
             if (sw.hasWidgets()) {
@@ -57,8 +59,8 @@ public class WindowSystem extends GraphicsEventSystem {
                 }
             }
 
-
-         }
+            
+        }
 	}
 
 
@@ -94,12 +96,12 @@ public class WindowSystem extends GraphicsEventSystem {
                 sw.getY()+b.y+b.height);    
 
             // draw the label
-            this.setColor(l.fgColor);
-            this.drawString(l.label,
+            this.setColor(b.fgColor);
+            this.drawString(b.label,
                         sw.getX()+b.x+b.padding,
                         sw.getY()+b.y+b.height-b.padding);
             // decorate it
-            if (wm!=null) wm.decorateWidget(w);
+            // if (wm!=null) wm.decorateWidget(w);
 
         }
         // case of RATLabel 
@@ -135,8 +137,9 @@ public class WindowSystem extends GraphicsEventSystem {
 
 
 
-    // The window system, keep reference of the WM used by the app
-    // so when it draw, it tell the wm to decorate the windows when it's done
+    // The window system keeps the reference of the WM used by the app
+    // It then passes the mouse events to the corresponding WM
+    // and it tells WM when to draw decoration
     public void setWindowManager(WindowManager windowManager) {
         wm = windowManager;
     }
@@ -230,4 +233,30 @@ public class WindowSystem extends GraphicsEventSystem {
             && (sw.getY()<y) && (sw.getY()+sw.getHeight()>y);
     }       
 
+
+    // Mouse handling Functions
+    // pass the event to non-null WM.
+
+    @Override
+    public void handleMouseClicked(int x, int y) {
+        if (wm!=null) { wm.handleMouseClicked(x,y); }
+    }
+    @Override
+    public void handleMouseDragged(int x, int y) {
+        if (wm!=null) { wm.handleMouseDragged(x,y); }
+    }
+    @Override
+    public void handleMousePressed(int x, int y) {
+        if (wm!=null) { wm.handleMousePressed(x,y); }
+    }
+    @Override
+    public void handleMouseReleased(int x, int y) {
+        if (wm!=null) { wm.handleMouseReleased(x,y); }
+    }
+    @Override
+    public void handleMouseMoved(int x, int y) {
+        if (wm!=null) { wm.handleMouseMoved(x,y); }
+    }
+    
+    
 }
