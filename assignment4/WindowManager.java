@@ -137,9 +137,17 @@ public class WindowManager {
     // then check if it is in one of the buttons and handle it 
     public void handleMouseClicked(int x, int y) {
         SimpleWindow sw = ws.getWindowAtPosition(x,y);
-        if (sw!=null && isPointInCloseButton(sw,x,y)) {
+        if (sw==null) { // If the point is not in any window, skipp the following.
+            return;
+        }
+        if (isPointInCloseButton(sw,x,y)) {
             ws.closeWindow(sw);
             ws.requestRepaint();
+            return;
+        }
+        RATWidget widget = sw.getWidgetAtPosition(x-sw.getX(),y-sw.getY());
+        if (widget!=null&&widget instanceof RATButton) {
+            ((RATButton)widget).clicked();
         }
     }
 
