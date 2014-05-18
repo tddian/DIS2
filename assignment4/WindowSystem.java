@@ -14,7 +14,7 @@ import de.rwth.hci.Graphics.GraphicsEventSystem;
 public class WindowSystem extends GraphicsEventSystem {
 
     // corresponding window manager
-    private WindowManager wm = null;
+    public WindowManager wm = null;
 
     // dimension of our desktop
 	private int mWidth;
@@ -22,7 +22,7 @@ public class WindowSystem extends GraphicsEventSystem {
     // array to store the windows active and miminized
 	private ArrayList<SimpleWindow> simpleWindows;
     // MINIMIZE NOT FULLY IMPLEMENTED YET
-	private ArrayList<SimpleWindow> minimizedWindows;
+	// private ArrayList<SimpleWindow> minimizedWindows;
 
     // constructor - just initialize our desktop
 	public WindowSystem(int width, int height) {
@@ -32,46 +32,125 @@ public class WindowSystem extends GraphicsEventSystem {
 		simpleWindows = new ArrayList<SimpleWindow>();
 
         // MINIMIZE NOT FULLY IMPLEMENTED YET
-        minimizedWindows = new ArrayList<SimpleWindow>();
+        // minimizedWindows = new ArrayList<SimpleWindow>();
 	}
 
 
     // this is the function called by the repaint method
 	protected void handlePaint() {
         
-        // Draw all the windows	    
+        // Draw all the windows in memory
         int num_window = simpleWindows.size();
         for(int i=0; i<num_window; i++) {
             SimpleWindow sw = simpleWindows.get(i);
+            System.out.println("printing windows");
+            // draw the window
             this.drawWindow(sw);
+            // wm.drawDecoration(sw);
             
-            if (wm!=null) {
-                wm.drawDecoration(sw);
+            // need to check if the window has children/widgets and paint them
+            if (sw.hasWidgets()) {
+                for (RATWidget child: sw.getWidgets()) {
+                                System.out.println("printing widget");
+
+                    this.drawWidgetInWindow(child,sw);
+                }
             }
+
+
          }
 	}
 
 
     /* Draw a SimpleWindow as a simple rectangular */
     protected void drawWindow(SimpleWindow sw) {
-        this.setColor(Color.LIGHT_GRAY);
+        this.setColor(Color.DARK_GRAY);
         fillRect(
             sw.getX(),
             sw.getY(),
             sw.getX()+sw.getWidth(),
             sw.getY()+sw.getHeight());
+        // System.out.println("done printing window");
     }
     
-    public void setWindowManager(WindowManager windoManager) {
-        wm = windoManager;
+    // draw a widget in a window
+    // should be careful about the relative positioning
+    protected void drawWidgetInWindow(RATWidget w, SimpleWindow sw) {
+        
+        // need to check what widget it is
+        // case of RATLabel 
+        if (w instanceof RATLabel) {
+            // cast to access all his methods
+            RATLabel l = (RATLabel)w;
+            
+            // print the background honoring the colors ()
+            this.setColor(l.bgColor);
+            fillRect(
+                sw.getX()+l.x,
+                sw.getY()+l.y,
+                sw.getX()+l.x+l.width,
+                sw.getY()+l.y+l.height);    
+
+            // draw the label
+            this.setColor(l.fgColor);
+            this.drawString(l.label,
+                        sw.getX()+l.x+l.padding,
+                        sw.getY()+l.y+l.height-l.padding);
+
+
+        }
+        // if (w instanceof RATButton) {
+        //     this.setColor(w.bgcolor);
+        //     fillRect(
+        //         sw.getX()+w.x,
+        //         sw.getY()+w.y,
+        //         sw.getX()+w.x+w.width,
+        //         sw.getY()+w.y+w.height);    
+        // }
+        
+
+
+
+        // System.out.println("done filling widget "+ (sw.getX()+w.x) + ( sw.getY()+w.y )+ (sw.getX()+w.x+w.width)+ (sw.getY()+w.y+w.height));
+    }
+    
+
+
+
+    // The window system, keep reference of the WM used by the app
+    // so when it draw, it tell the wm to decorate the windows when it's done
+    public void setWindowManager(WindowManager windowManager) {
+        wm = windowManager;
     }
 
-    // Create a new window at default position and size 
+
+
+
+
+// Create a new window at default position and size 
     public SimpleWindow createNewWindow() {
-        SimpleWindow sw = new SimpleWindow(0,0,200,200);
+        SimpleWindow sw = new SimpleWindow(0,0,400,300);
         simpleWindows.add(sw);
         return sw;
     }
+    // // Create a new window at default position and size 
+    // public SimpleWindow createNewWindow() {
+    //     SimpleWindow sw = new SimpleWindow();
+    //     simpleWindows.add(sw);
+    //     return sw;
+    // }
+    // // Create a new window at default position and size 
+    // public SimpleWindow createNewWindow(int width, int height) {
+    //     SimpleWindow sw = new SimpleWindow(0,0,width,height);
+    //     sw.setWidth(width);
+    //     sw.setHeight(height);
+    //     simpleWindows.add(sw);
+    //     return sw;
+    // }
+
+
+
+
 
     // Move a window 
     public void moveWindow(SimpleWindow sw, int inX, int inY) {
@@ -79,6 +158,8 @@ public class WindowSystem extends GraphicsEventSystem {
         sw.setY(inY);
         this.requestRepaint();
     }
+
+
 
 
      // Bring a window to top 
@@ -114,12 +195,12 @@ public class WindowSystem extends GraphicsEventSystem {
         simpleWindows.remove(sw);
     }
 
-    // Close the windows. We just remove it from the array
-    public void minimizeWindow(SimpleWindow sw) {
-        simpleWindows.remove(sw);
-        minimizedWindows.add(sw);
-        this.requestRepaint();
-    }
+    // // Minimize the window
+    // public void minimizeWindow(SimpleWindow sw) {
+    //     simpleWindows.remove(sw);
+    //     minimizedWindows.add(sw);
+    //     this.requestRepaint();
+    // }
 
     public void restoreWindow(SimpleWindow sw) {
         simpleWindows.remove(sw);

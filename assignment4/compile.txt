@@ -1,0 +1,1 @@
+javac -cp GES.jar:. MyApp.java RATWidget.java RATButton.java RATLabel.java WindowManager.java WindowSystem.java RATMouseListener.java 
