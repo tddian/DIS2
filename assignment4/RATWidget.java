@@ -17,16 +17,17 @@ abstract class RATWidget {
 	// COMMON ATTRIBUTES TO ALL WIDGETS (made public for easy access, instead of getter and setter //not safe)
 
 	// position
-	public int x;
-	public int y;
+	protected int x;
+	protected int y;
 	// dimensions
-	public int width;
-	public int height;
+	protected int width;
+	protected int height;
 	// Background and foreground color
-	public Color bgColor;
-	public Color fgColor;
-	// delegate on which call the callback methods
-	public Object delegate;
+	protected Color bgColor;
+	protected Color fgColor;
+	// Identifier for recognization purpose
+    protected String IDstr = "";
+    
 	
 	
 	public RATWidget(){
@@ -34,12 +35,15 @@ abstract class RATWidget {
 		this.y = defaultY;
 		this.width = defaultWidth;
 		this.height = defaultHeight;
-		this.delegate = null;
 		this.fgColor = defaultFgColor;
 		this.bgColor = defaultBgColor;
 	}
 	
-
+    // check if it contains the point (x,y)
+    public boolean contain(int pX, int pY) {
+        return (this.x<pX) && (this.x+this.width>pX)
+            && (this.y<pY) && (this.y+this.height>pY);
+    }       
 	
 	
 	
@@ -49,9 +53,19 @@ abstract class RATWidget {
 		this.y = y;
 	}
 
-
-	
+    // Getter and setter
+    public void setIdentifier(String str) { IDstr = str; }
+    public String getIdentifier() { return IDstr; }
+    public int getX() { return x; }
+    public int getY() { return y; }
+    public int getWidth() { return width; }
+    public int getHeight() { return height; }
+    public void setX(int inX) { x = inX; }
+    public void setY(int inY) { y = inY; }
+    public void setWidth(int inWidth) { width = inWidth; }
+    public void setHeight(int inHeight) { height = inHeight; }
 }
+
 
 
 

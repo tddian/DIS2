@@ -42,7 +42,7 @@ public class WindowManager {
         this.drawTitlebar(sw);
 //        this.drawMinimizeButton(sw);
         this.drawCloseButton(sw);
-        this.drawWindowBorders(sw);
+        this.drawWindowBorders(sw,3);
     }
 
     // draw the decoration for a widget. for now only the border of the buttons

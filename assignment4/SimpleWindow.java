@@ -8,7 +8,6 @@ public class SimpleWindow {
     private int mX, mY, mWidth, mHeight;
 
     private ArrayList<RATWidget> widgets;
-    private ArrayList<SimpleWindow> children;
 
     public SimpleWindow() {
         mX = 0;
@@ -16,8 +15,6 @@ public class SimpleWindow {
         mWidth = 100;
         mHeight = 100;
         widgets = new ArrayList<RATWidget>();
-        children = new ArrayList<SimpleWindow>();
-
     }
 
     public SimpleWindow(int inX, int inY, int inWidth, int inHeight) {
@@ -26,8 +23,6 @@ public class SimpleWindow {
         mWidth = inWidth;
         mHeight = inHeight;
         widgets = new ArrayList<RATWidget>();
-        children = new ArrayList<SimpleWindow>();
-
     }
 
 
@@ -36,6 +31,18 @@ public class SimpleWindow {
         widgets.add(w);
     }
 
+    // Look for widget at a given (relative) position
+    public RATWidget getWidgetAtPosition(int rX, int rY) {
+        int num = widgets.size();
+        // iterate through widgets until we find one that contain the point.
+        for(int i=0; i<num; i++) {
+            RATWidget w = widgets.get(i);
+            if (w.contain(rX,rY)) {
+                return w;
+            }
+        }
+        return null;
+    }
 
     // widget management
     // does the window has widgets?

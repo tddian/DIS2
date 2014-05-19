@@ -88,16 +88,16 @@ public class WindowSystem extends GraphicsEventSystem {
             // print the background honoring the colors ()
             this.setColor(b.bgColor);
             fillRect(
-                sw.getX()+b.x,
-                sw.getY()+b.y,
-                sw.getX()+b.x+b.width,
-                sw.getY()+b.y+b.height);    
+                sw.getX()+b.getX(),
+                sw.getY()+b.getY(),
+                sw.getX()+b.getX()+b.getWidth(),
+                sw.getY()+b.getY()+b.getHeight());    
 
             // draw the label
             this.setColor(b.fgColor);
             this.drawString(b.label,
-                        sw.getX()+b.x+b.padding,
-                        sw.getY()+b.y+b.height-b.padding);
+                        sw.getX()+b.getX()+b.padding,
+                        sw.getY()+b.getY()+b.getHeight()-b.padding);
             // decorate it
             if (wm!=null) wm.drawWidgetDecorationInWindow(w,sw);
 
@@ -111,25 +111,19 @@ public class WindowSystem extends GraphicsEventSystem {
             // print the background honoring the colors ()
             this.setColor(l.bgColor);
             fillRect(
-                sw.getX()+l.x,
-                sw.getY()+l.y,
-                sw.getX()+l.x+l.width,
-                sw.getY()+l.y+l.height);    
+                sw.getX()+l.getX(),
+                sw.getY()+l.getY(),
+                sw.getX()+l.getX()+l.getWidth(),
+                sw.getY()+l.getY()+l.getHeight());    
 
             // draw the label
             this.setColor(l.fgColor);
             this.drawString(l.label,
-                        sw.getX()+l.x+l.padding,
-                        sw.getY()+l.y+l.height-l.padding);
+                        sw.getX()+l.getX()+l.padding,
+                        sw.getY()+l.getY()+l.getHeight()-l.padding);
 
 
         }
-        
-        
-
-
-
-        // System.out.println("done filling widget "+ (sw.getX()+w.x) + ( sw.getY()+w.y )+ (sw.getX()+w.x+w.width)+ (sw.getY()+w.y+w.height));
     }
     
 

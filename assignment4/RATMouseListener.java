@@ -3,5 +3,5 @@
  */
 
 public interface RATMouseListener {
-    public void mouseClicked();
+    public void mouseClicked(String ID);
 }
