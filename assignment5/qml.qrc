@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/">
+        <file>MainView.qml</file>
+        <file>WeatherLoader.qml</file>
+        <file>WeatherView.qml</file>
+        <file>window.qml</file>
+        <file>main.cpp</file>
+        <file>images/windDirection.svg</file>
+    </qresource>
+</RCC>
