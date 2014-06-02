@@ -10,6 +10,8 @@ Rectangle {
     //these will be set by the loader
     property string sunrise: "never"
     property string sunset: "never"
+    property string sunriseT: "0"
+    property string sunsetT: new Date()
     property string city: "nowhere"
     property string country: "nowhere"
     property double latitude: 0
@@ -29,6 +31,11 @@ Rectangle {
     property string weatherDescription: "nothing"
     property int weatherCode: 0 //see http://bugs.openweathermap.org/projects/api/wiki/Weather_Condition_Codes
 
+    property string fontColor: "#3d3d3d"
+    property double sunAngle: 0 //the sun's Positioner
+
+    property string bgImg: "http://farm1.staticflickr.com/231/483342623_5a4e9bde18_b.jpg"
+
     // Uncomment this for animation when the temperature changes:
     Behavior on currentTemperature { PropertyAnimation { duration: 2000} }
     Behavior on windDirection { PropertyAnimation { duration: 2000} }
@@ -39,10 +46,18 @@ Rectangle {
 
     //Go crazy!
 
+    Rectangle {
+        id: bg
+        x: 5
+        y: 5
+        width: 250
+        height: 230
+        color: "#99ffffff"
+    }
     Text {
         id: cityComboBox
         y: 8
-        color: "#d3d3d3"
+        color: fontColor
         text: "Select City :"
         anchors.leftMargin: 8
         anchors.left: parent.left
@@ -53,7 +68,7 @@ Rectangle {
     Text {
         id: temperature
         y: 50
-        color: "#d3d3d3"
+        color: fontColor
         text: "It is currently " + currentTemperature.toFixed(2) + "°C"
         anchors.left: parent.left
         anchors.leftMargin: 8
@@ -65,7 +80,7 @@ Rectangle {
     Text {
         id: humidityLabel
         y: 85
-        color: "#d3d3d3"
+        color: fontColor
         text: "Humidity : " + humidity + "%"
         anchors.left: parent.left
         anchors.leftMargin: 8
@@ -76,7 +91,7 @@ Rectangle {
     Text {
         id: cloudLevelLabel
         y: 122
-        color: "#d3d3d3"
+        color: fontColor
         text: "Cloud Level " + cloudLevel + "%"
         anchors.left: parent.left
         anchors.leftMargin: 8
@@ -87,7 +102,7 @@ Rectangle {
     Text {
         id: windDirectionLabel
         y: 158
-        color: "#d3d3d3"
+        color: fontColor
         text: "Wind Direction :"
         anchors.right: text1.right
         anchors.left: parent.left
@@ -115,10 +130,11 @@ Rectangle {
         anchors.top: parent.top
         anchors.left: parent.left
         width: page.width
-        fillMode: Image.Pad
-        verticalAlignment: Image.AlignTop
-        horizontalAlignment: Image.AlignLeft
-        source: "http://farm1.staticflickr.com/231/483342623_5a4e9bde18_b.jpg"
+        height: page.height
+        fillMode: Image.PreserveAspectCrop
+        verticalAlignment: Image.Center
+        horizontalAlignment: Image.Center
+        source: bgImg
 
     }
 
@@ -158,5 +174,28 @@ Rectangle {
         font.bold: true
     }
 
-
+//    Text {
+//        id: sunriseLabel
+//        x: 100
+//        y: 250
+//        text: sunriseT
+//        font.pixelSize: 16
+//        font.bold: true
+//    }
+//    Text {
+//        id: sunsetLabel
+//        x: 100
+//        y: 270
+//        text: sunsetT
+//        font.pixelSize: 16
+//        font.bold: true
+//    }
+//    Text {
+//        id: currentTimeLabel
+//        x: 100
+//        y: 290
+//        text: new Date()
+//        font.pixelSize: 16
+//        font.bold: true
+//    }
 }

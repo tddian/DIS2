@@ -1,7 +1,6 @@
 import QtQuick 2.2
 import QtQuick.XmlListModel 2.0
 
-
 //Touch at your own peril!
 
 Item {
@@ -9,6 +8,74 @@ Item {
     property string city: "Aachen, de"
     property var weatherView
     property string error
+
+    property string flickrApiKey: "62c1feffd70264fb83b75f79867e0781"
+    property string imgUrl: ""
+    property int limit: 50
+    property int i: 0
+
+    XmlListModel {
+//        property QStringList cityName: city.split(",")
+        id: photo
+        source: "https://api.flickr.com/services/rest/?method=flickr.photos.search&extras=url_l&privacy_filter=1&per_page="+limit.toString()+"&sort=relevance&api_key="+flickrApiKey+"&text=" + city.substring(0,city.length-4) + ", city"
+        query: "/rsp/photos/photo"
+        XmlRole {
+            name: "xml_url"
+            query: "@url_l/string()"
+        }
+
+        XmlRole {
+            name: "xml_id"
+            query: "@id/string()"
+        }
+
+        XmlRole {
+            name: "xml_secret"
+            query: "@secret/string()"
+        }
+
+        XmlRole {
+            name: "xml_farm"
+            query: "@farm/string()"
+        }
+
+        XmlRole {
+            name: "xml_server"
+            query: "@server/string()"
+        }
+
+        onStatusChanged:
+        {
+            if(status === XmlListModel.Ready && count >= 1)
+            {
+
+                console.log("flickr "+count+"\n"+source+"\n");
+
+                for (; i<limit; i++)
+                {
+                    imgUrl = get(i).xml_url
+                    console.log(i.toString()+", "+imgUrl+" \n")
+                    if (imgUrl.length != 0)
+                    {
+                        weatherView.bgImg = imgUrl
+                        i++
+                        if (i==limit-1) {i=0;}
+                        break
+                    }
+                    if (i==limit-1) {i=0;}
+                }
+            }
+
+            if(status == XmlListModel.Error)
+            {
+                return error = errorString();
+            }
+            else if (status == XmlListModel.Ready)
+            {
+                error = photo.count === 0 ? "Error loading photos (invalid city name?)" : "";
+            }
+        }
+    }
 
     XmlListModel {
         id: weather
@@ -116,6 +183,8 @@ Item {
             {
                 weatherView.sunset = Qt.formatDateTime(get(0).xml_sunset, "h:mm")
                 weatherView.sunrise = Qt.formatDateTime(get(0).xml_sunrise, "h:mm")
+                weatherView.sunsetT = get(0).xml_sunset
+                weatherView.sunriseT = get(0).xml_sunrise
                 weatherView.city =  get(0).xml_city
                 weatherView.country = get(0).xml_country
                 weatherView.latitude = get(0).xml_latitude

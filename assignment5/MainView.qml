@@ -16,7 +16,7 @@ Rectangle
         z: 1001
         anchors.top: parent.top
         anchors.topMargin: 8
-        model: [ "Aachen, de", "Frankfurt, de", "London, uk", "Sidney, au", "Stockholm, se", "Los Angeles, us", "Johannesburg, ZA" ]
+        model: [ "Aachen, de", "Berlin, de", "London, uk", "Sidney, au", "Stockholm, se", "Los Angeles, us", "Trento, it", "Taipei, tw" ]
         onCurrentIndexChanged:{
             if (comboBox1.currentText!="") loader.city = comboBox1.currentText; else loader.city = "Aachen, de"}
     }
