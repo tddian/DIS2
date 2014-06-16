@@ -12,10 +12,24 @@
 
 @property (assign) IBOutlet NSWindow *window;
 
+// core data stuff
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
 @property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 
 - (IBAction)saveAction:(id)sender;
+
+
+
+
+// reference to the radio group
+@property (weak) IBOutlet NSMatrix *LanguagesRadioGroup;
+// reference to the label
+@property (weak) IBOutlet NSTextField *GreetingLabel;
+
+//action to be performed when i click on a radio button
+- (IBAction)ChangeLanguage:(NSButtonCell *)sender;
+
+
 
 @end

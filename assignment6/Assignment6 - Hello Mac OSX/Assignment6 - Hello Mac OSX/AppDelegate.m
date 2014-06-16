@@ -27,6 +27,37 @@
     return [appSupportURL URLByAppendingPathComponent:@"hci.rwth-aachen.de.Assignment6___Hello_Mac_OSX"];
 }
 
+
+
+
+
+
+
+
+- (void)ChangeLanguage:(NSButtonCell *)sender {
+    
+    
+    NSInteger i = [self.LanguagesRadioGroup selectedTag];
+    
+    
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+// CORE DATA STUFF = not used for now
+
+
+
 // Creates if necessary and returns the managed object model for the application.
 - (NSManagedObjectModel *)managedObjectModel
 {
