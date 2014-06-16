@@ -49,12 +49,12 @@ Item {
             if(status === XmlListModel.Ready && count >= 1)
             {
 
-                console.log("flickr "+count+"\n"+source+"\n");
+//                console.log("flickr "+count+"\n"+source+"\n");
 
                 for (; i<limit; i++)
                 {
                     imgUrl = get(i).xml_url
-                    console.log(i.toString()+", "+imgUrl+" \n")
+//                    console.log(i.toString()+", "+imgUrl+" \n")
                     if (imgUrl.length != 0)
                     {
                         weatherView.bgImg = imgUrl

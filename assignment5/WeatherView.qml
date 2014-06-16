@@ -48,11 +48,13 @@ Rectangle {
 
     Rectangle {
         id: bg
-        x: 5
-        y: 5
+        x: 0
+        y: 0
         width: 250
-        height: 230
+        height: 330
         color: "#99ffffff"
+        anchors.top: parent.top
+        anchors.left: parent.left
     }
     Text {
         id: cityComboBox
@@ -62,7 +64,7 @@ Rectangle {
         anchors.leftMargin: 8
         anchors.left: parent.left
         font.pixelSize: 18
-        z: 2
+        z: 102
     }
 
     Text {
@@ -93,6 +95,19 @@ Rectangle {
         y: 122
         color: fontColor
         text: "Cloud Level " + cloudLevel + "%"
+        anchors.left: parent.left
+        anchors.leftMargin: 8
+        font.pixelSize: 18
+        z: 2
+    }
+
+    Text {
+        id: windSpeedLabel
+        y: 195
+        color: fontColor
+        text: "Wind Speed : " + windSpeed
+        anchors.rightMargin: 0
+        anchors.right: text1.right
         anchors.left: parent.left
         anchors.leftMargin: 8
         font.pixelSize: 18
@@ -144,7 +159,7 @@ Rectangle {
         y: 126
         text: qsTr("N")
         font.bold: true
-        font.pixelSize: 16
+        font.pixelSize: 14
     }
 
     Text {
@@ -152,7 +167,8 @@ Rectangle {
         x: 225
         y: 158
         text: qsTr("E")
-        font.pixelSize: 16
+        font.pixelSize: 14
+
         font.bold: true
     }
 
@@ -161,7 +177,7 @@ Rectangle {
         x: 163
         y: 158
         text: qsTr("W")
-        font.pixelSize: 16
+        font.pixelSize: 14
         font.bold: true
     }
 
@@ -170,32 +186,11 @@ Rectangle {
         x: 197
         y: 189
         text: qsTr("S")
-        font.pixelSize: 16
+        font.pixelSize: 14
         font.bold: true
     }
 
-//    Text {
-//        id: sunriseLabel
-//        x: 100
-//        y: 250
-//        text: sunriseT
-//        font.pixelSize: 16
-//        font.bold: true
-//    }
-//    Text {
-//        id: sunsetLabel
-//        x: 100
-//        y: 270
-//        text: sunsetT
-//        font.pixelSize: 16
-//        font.bold: true
-//    }
-//    Text {
-//        id: currentTimeLabel
-//        x: 100
-//        y: 290
-//        text: new Date()
-//        font.pixelSize: 16
-//        font.bold: true
-//    }
+
+
+
 }
